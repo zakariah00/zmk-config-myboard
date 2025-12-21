@@ -23,7 +23,7 @@
 &kp LSHFT &kp Z     &kp X     &kp C     &kp V     &kp B     &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH  &none     &kp RSHFT &none     &kp UP    &kp PG_DN
 
 /* ROW 5: Ctrl, Win, Alt, Space, Arrows */
-&kp LCTRL &kp LGUI  &kp LALT  &none     &none     &kp SPACE &none     &none     &kp RALT  &kp FN    &kp RCTRL &none     &kp LEFT  &none     &kp DOWN  &kp RIGHT
+&kp LCTRL &kp LGUI  &kp LALT  &none     &none     &kp SPACE &none     &none     &kp RALT  &mo 1    &kp RCTRL &none     &kp LEFT  &none     &kp DOWN  &kp RIGHT
             >;
         };
     };

@@ -1,0 +1,6 @@
+if SHIELD_MYBOARD
+
+config ZMK_KEYBOARD_NAME
+    default "HXSJ Keyboard"
+
+endif

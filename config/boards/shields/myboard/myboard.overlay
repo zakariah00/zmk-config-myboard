@@ -3,6 +3,14 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <dt-bindings/gpio/gpio.h>
 
+/* Delete default peripherals to free up pins */
+&uart0 { status = "disabled"; };
+&i2c0  { status = "disabled"; };
+&spi0  { status = "disabled"; };
+&spi1  { status = "disabled"; };
+/* If your board uses pwm leds, kill them too just in case */
+&pwm0  { status = "disabled"; 
+
 / {
     chosen {
         zmk,kscan = &kscan0;

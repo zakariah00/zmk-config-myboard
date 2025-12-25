@@ -1,6 +1,7 @@
-/* myboard.overlay */
+/* myboard.overlay - FIXED for row2col */
 
 #include <dt-bindings/zmk/matrix_transform.h>
+#include <dt-bindings/gpio/gpio.h>
 
 / {
     chosen {
@@ -10,42 +11,42 @@
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";
         label = "KSCAN";
+        
+        /* 1. We keep your new direction */
         diode-direction = "row2col";
 
-        /* ROWS (5 Total) 
-           Connected to the LEFT SIDE pins (Top to Bottom)
+        /* 2. ROWS are now OUTPUTS (Senders) 
+           They do NOT need pull-downs anymore. 
+           Just GPIO_ACTIVE_HIGH. 
         */
         row-gpios
-            = <&gpio0 6  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* Row 0 (Label: 006) */
-            , <&gpio0 8  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* Row 1 (Label: 008) */
-            , <&gpio0 17 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* Row 2 (Label: 017) */
-            , <&gpio0 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* Row 3 (Label: 020) */
-            , <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* Row 4 (Label: 022) */
+            = <&gpio0 6  GPIO_ACTIVE_HIGH>
+            , <&gpio0 8  GPIO_ACTIVE_HIGH>
+            , <&gpio0 17 GPIO_ACTIVE_HIGH>
+            , <&gpio0 20 GPIO_ACTIVE_HIGH>
+            , <&gpio0 22 GPIO_ACTIVE_HIGH>
             ;
 
-        /* COLUMNS (16 Total) */
+        /* 3. COLUMNS are now INPUTS (Listeners) 
+           They NEED the pull-down resistors to stay quiet!
+        */
         col-gpios
-            /* LEFT SIDE (Continuing down) */
-            = <&gpio0 24 GPIO_ACTIVE_HIGH> /* Col 0  (Label: 024) */
-            , <&gpio1 0  GPIO_ACTIVE_HIGH> /* Col 1  (Label: 100) */
-            , <&gpio0 11 GPIO_ACTIVE_HIGH> /* Col 2  (Label: 011) */
-            , <&gpio1 4  GPIO_ACTIVE_HIGH> /* Col 3  (Label: 104) */
-            , <&gpio1 6  GPIO_ACTIVE_HIGH> /* Col 4  (Label: 106) */
-
-            /* RIGHT SIDE (Top to Bottom) */
-            , <&gpio0 31 GPIO_ACTIVE_HIGH> /* Col 5  (Label: 031) */
-            , <&gpio0 29 GPIO_ACTIVE_HIGH> /* Col 6  (Label: 029) */
-            , <&gpio0 2  GPIO_ACTIVE_HIGH> /* Col 7  (Label: 002) */
-            , <&gpio1 15 GPIO_ACTIVE_HIGH> /* Col 8  (Label: 115) */
-            , <&gpio1 13 GPIO_ACTIVE_HIGH> /* Col 9  (Label: 113) */
-            , <&gpio1 11 GPIO_ACTIVE_HIGH> /* Col 10 (Label: 111) */
-            , <&gpio0 10 GPIO_ACTIVE_HIGH> /* Col 11 (Label: 010) */
-            , <&gpio0 9  GPIO_ACTIVE_HIGH> /* Col 12 (Label: 009) */
-
-            /* THE "SURGEON" PADS (Back of board) */
-            , <&gpio1 1  GPIO_ACTIVE_HIGH> /* Col 13 (Label: 101) */
-            , <&gpio1 2  GPIO_ACTIVE_HIGH> /* Col 14 (Label: 102) */
-            , <&gpio1 7  GPIO_ACTIVE_HIGH> /* Col 15 (Label: 107) */
+            = <&gpio0 24 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 0  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 4  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 6  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 2  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 9  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 1  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 2  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 7  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
     };
 };
